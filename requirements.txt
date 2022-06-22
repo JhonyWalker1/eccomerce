@@ -1,0 +1,12 @@
+django==3.2
+mysqlclient
+Pillow
+djangorestframework
+django-cors-headers
+cloudinary
+djangorestframework-simplejwt
+#psycopg2
+python-decouple
+#gunicorn
+#whitenoise
+#deploy 01
