@@ -80,26 +80,6 @@ class MyUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
-
-
-###########################################################################################
-
-""" class Cliente(models.Model):
-    cliente_id=models.AutoField(primary_key=True)
-    usuario_id = models.OneToOneField(User,related_name='Cliente',on_delete=models.RESTRICT)
-    cliente_nombre = models.CharField(max_length=100)
-    cliente_apellido = models.CharField(max_length=100)
-    cliente_email = models.EmailField()
-    cliente_telefono = models.CharField(max_length=100)
-    cliente_direccion = models.CharField(max_length=100)
-    cliente_pais = models.CharField(max_length=100)
-    cliente_ciudad = models.CharField(max_length=100)
-    cliente_fecha_nacimiento = models.DateField()
-    cliente_foto = CloudinaryField('image')
-
-    def __str__(self):
-        return self.cliente_nombre """
-
 class Region(models.Model):
     region_id = models.AutoField(primary_key=True)
     region_nombre = models.CharField(max_length=100)
@@ -134,6 +114,7 @@ class Tour(models.Model):
     tour_stock = models.IntegerField(default=0)
     tour_fecha_inicio = models.DateField()
     tour_fecha_fin = models.DateField()
+    tour_tag = models.CharField(max_length=100,null=True, blank=True)
     
     def __str__(self):
         return self.tour_nombre

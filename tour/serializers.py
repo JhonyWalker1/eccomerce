@@ -1,5 +1,4 @@
 
-import email
 from rest_framework import serializers
 
 from .models import MyUser,Region,Tour,Compra,CompraTour
@@ -10,28 +9,38 @@ class TourSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tour
         fields = '__all__'
-        
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['tour_foto1'] = instance.tour_foto1.url
-        representation['tour_foto2'] = instance.tour_foto2.url
-        representation['tour_foto3'] = instance.tour_foto3.url
-        representation['tour_foto4'] = instance.tour_foto4.url
-        representation['tour_foto5'] = instance.tour_foto5.url
+        if instance.tour_foto1:
+            representation['tour_foto1'] = instance.tour_foto1.url
+        if instance.tour_foto2:
+            representation['tour_foto2'] = instance.tour_foto2.url
+        if instance.tour_foto3:
+            representation['tour_foto3'] = instance.tour_foto3.url
+        if instance.tour_foto4:
+            representation['tour_foto4'] = instance.tour_foto4.url
+        if instance.tour_foto5:
+            representation['tour_foto5'] = instance.tour_foto5.url
         return representation
+    
 class TourDetalleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tour
         fields = '__all__'
-        
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['tour_foto1'] = instance.tour_foto1.url
-        representation['tour_foto2'] = instance.tour_foto2.url
-        representation['tour_foto3'] = instance.tour_foto3.url
-        representation['tour_foto4'] = instance.tour_foto4.url
-        representation['tour_foto5'] = instance.tour_foto5.url
+        if instance.tour_foto1:
+            representation['tour_foto1'] = instance.tour_foto1.url
+        if instance.tour_foto2:
+            representation['tour_foto2'] = instance.tour_foto2.url
+        if instance.tour_foto3:
+            representation['tour_foto3'] = instance.tour_foto3.url
+        if instance.tour_foto4:
+            representation['tour_foto4'] = instance.tour_foto4.url
+        if instance.tour_foto5:
+            representation['tour_foto5'] = instance.tour_foto5.url
         return representation
+            
 ######################TODO MOSTRAR TOUR POR REGION###############################
 class RegionTourSerializer(serializers.ModelSerializer):
     Tour = TourSerializer(many=True,read_only=True)
@@ -60,14 +69,11 @@ class CompraSerializer(serializers.ModelSerializer):
         model = Compra
         fields = '__all__'
 
-
 ##################################TODO PARA HACER LA COMPRA#############################################
 class CompraTourSerializerPOST(serializers.ModelSerializer):
     class Meta:
         model = CompraTour
         fields = ['tour_id','compratour_cantidad','tour_precio_oferta']
-        
-
 
 class CompraSerializerPOST(serializers.ModelSerializer):
     compratours = CompraTourSerializerPOST(many=True)
@@ -90,17 +96,17 @@ class CompraSerializerPOST(serializers.ModelSerializer):
 class TourSerializerGET(serializers.ModelSerializer):
     class Meta:
         model = Tour
-        fields = ['tour_nombre','tour_foto1']
+        fields = ['tour_nombre','tour_foto1','tour_fecha_inicio','tour_fecha_fin']
         
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['tour_foto1'] = instance.tour_foto1.url
+        if instance.tour_foto1:
+            representation['tour_foto1'] = instance.tour_foto1.url
         return representation 
 
 class CompraTourSerializerGET(serializers.ModelSerializer):
     tour = TourSerializerGET(source='tour_id')
     class Meta:
-        
         model = CompraTour
         fields = ['tour_id','compratour_cantidad','tour_precio_oferta','tour']
         
@@ -110,7 +116,6 @@ class CompraSerializerGET(serializers.ModelSerializer):
     class Meta:
         model = Compra
         fields = ['compra_id','compra_fecha','compra_nro','user_id','estado','compra_hora','compratour_total','compratours',]
-        
         
 class ClienteTourSerializer(serializers.ModelSerializer):
     Compra = CompraSerializerGET(many=True)

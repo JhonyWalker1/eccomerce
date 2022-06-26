@@ -1,10 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
 from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
-
 from .models import *
 
 from .serializers import *
@@ -19,7 +17,7 @@ class IndexView(APIView):
         return Response(context)
 
 
-######################TODO SOBRE REGION########################
+######################TODO SOBRE REGION#########################
 class RegionView(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self,request):
@@ -84,7 +82,7 @@ class TourView(APIView):
 class TourDetalleView(APIView):
     def get(self,request,tour_id):
         dataDetalleTour = Tour.objects.get(pk=tour_id)
-        serDetalleTour = TourSerializer(dataDetalleTour)
+        serDetalleTour = TourDetalleSerializer(dataDetalleTour)
         context = {
             'ok':True,
             'content':serDetalleTour.data
@@ -105,7 +103,6 @@ class RegionTourView(APIView):
         return Response(context)
     
 ##############TODO SOBRE COMPRA############################
-
 from django.db.transaction import atomic
 
 class CompraView(APIView):
@@ -123,7 +120,6 @@ class CompraView(APIView):
         serCompra = CompraSerializerPOST(data=request.data)
         serCompra.is_valid(raise_exception=True)
         serCompra.save()
-        
         context = {
             'ok':True,
             'content':serCompra.data
@@ -133,7 +129,7 @@ class CompraView(APIView):
     
 #############TODO CREAR NUEVO USUARIO##########################
 
-
+""" 
 class UsuarioCreateView(APIView):
     def post(self,request):
         serUsuario = ClienteSerializer(data=request.data)
@@ -154,7 +150,9 @@ class UsuarioCreateView(APIView):
         }
         return Response(context)
     
+ """
 
+####PARA REGISTRO DE USUARIO Y AGREGAR UNA IMAGEN A SU PERFIL#####
 from rest_framework import generics
 from cloudinary.uploader import upload
 

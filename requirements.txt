@@ -5,8 +5,8 @@ djangorestframework
 django-cors-headers
 cloudinary
 djangorestframework-simplejwt
-#psycopg2
+psycopg2
 python-decouple
-#gunicorn
+gunicorn
 #whitenoise
 #deploy 01
